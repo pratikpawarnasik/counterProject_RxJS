@@ -9,12 +9,14 @@ import { MyCounterComponent } from './my-counter/my-counter.component';
 
 @NgModule({
   declarations: [AppComponent, MyCounterComponent],
-  imports: [BrowserModule, StoreModule.forRoot({ count: counterReducer })],
+  imports: [
+    BrowserModule,
+    StoreModule.forRoot({ myCount_workspace: counterReducer }),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-
 
 /*
 Use of this source code is governed by an MIT-style license that

@@ -1,25 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { increment, decrement, reset } from '../counter.actions';
 
 @Component({
   selector: 'app-my-counter',
-  template:`<button id="increment" (click)="increment()">Increment</button>
+  template: `<button id="increment" (click)="increment()">Increment</button>
 
-  <div>Current Count: {{ count$ | async }}</div>
-  
-  <button id="decrement" (click)="decrement()">Decrement</button>
-  
-  <button id="reset" (click)="reset()">Reset Counter</button>`,
+<div>Current Count: {{ counts$ | async }}</div>
+
+<button id="decrement" (click)="decrement()">Decrement</button>
+
+<button id="reset" (click)="reset()">Reset Counter</button>`,
 })
-export class MyCounterComponent {
-  count$: Observable<number>;
+export class MyCounterComponent implements OnInit {
+  counts$: Observable<number>;
 
-  constructor(private store: Store<{ counts: number }>) {
-    this.count$ = store.select('counts');
+  constructor(private store: Store<{ myCount_workspace: any }>) {
+    this.counts$ = store.select((state) => state.myCount_workspace);
   }
-
+  ngOnInit() {
+    this.counts$.subscribe((count) => {
+      console.log('Count:', count);
+    });
+  }
   increment() {
     this.store.dispatch(increment());
   }
@@ -32,7 +36,6 @@ export class MyCounterComponent {
     this.store.dispatch(reset());
   }
 }
-
 
 /*
 Use of this source code is governed by an MIT-style license that
